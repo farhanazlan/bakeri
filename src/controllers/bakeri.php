@@ -47,7 +47,7 @@ if (empty($data)) {
 });
 
 //edit table bakeri
-$app->put('/bakeri/put/[{name}]', function ($request,  $response,  $args){
+$app->put('/bakeri/edit/[{name}]', function ($request,  $response,  $args){
   $foodname = $args['name'];
   
  $form_dat=$request->getParsedBody();

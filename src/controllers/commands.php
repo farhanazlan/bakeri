@@ -9,13 +9,13 @@ function getAllbakeri($db)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-//get lab by id
+//get bakeri by id
 function getbakeri($db, $foodname)
 {
 $sql = 'Select * from bakeri Where food_name = :name';
 $stmt = $db->prepare ($sql);
-$name = (int) $foodname;
-$stmt->bindParam(':name', $name, PDO::PARAM_INT);
+$name = $foodname;
+$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 $stmt->execute();
 return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -25,10 +25,10 @@ return $stmt->fetchAll(PDO::FETCH_ASSOC);
 function createbakeri($db,$form_data)
 
 {
-    $sql = 'INSERT INTO bakeri (`food_name`, `food_isbn`, `food_category`) VALUES (:name, :isbn, :category)';
+    $sql = 'INSERT INTO bakeri (`food_name`, `food_price`, `food_category`) VALUES (:name, :price, :category)';
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':name', $form_data['food_name']);
-    $stmt->bindParam(':isbn', $form_data['food_isbn']);
+    $stmt->bindParam(':price', $form_data['food_price']);
     $stmt->bindParam(':category', $form_data['food_category']);
     $stmt->execute();
     return $db->lastInsertID(); //Insert last number 
@@ -48,7 +48,7 @@ function deletebakeri($db,$foodname)
     
 //update product by id
 function updatebakeri($db,$form_dat,$foodname) {
-    $sql = 'UPDATE bakeri SET food_isbn = :isbn , food_category = :category ';
+    $sql = 'UPDATE bakeri SET food_price = :price , food_category = :category ';
     $sql .=' WHERE food_name = :name';
 
     $stmt = $db->prepare ($sql);
@@ -56,7 +56,7 @@ function updatebakeri($db,$form_dat,$foodname) {
     // $mod = $date;
 
     $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-    $stmt->bindParam(':isbn', $form_dat['food_isbn']);
+    $stmt->bindParam(':price', $form_dat['food_price']);
     $stmt->bindParam(':category', $form_dat['food_category']);
     //$stmt->bindParam(':modified', $mod , PDO::PARAM_STR);
     $stmt->execute();
