@@ -25,6 +25,16 @@ if (empty($data)) {
  return $this->response->withJson(array('data' => $data), 200);
 });
 
+//request table bakeri by condition (category)
+$app->get('/bakeri/cate/[{category}]', function ($request, $response, $args){
+  $foodcategory = $args['category'];
+$data = getbakericategory($this->db,$foodcategory);
+if (empty($data)) {
+  return $this->response->withJson(array('error' => 'no data'), 404);
+}
+ return $this->response->withJson(array('data' => $data), 200);
+});
+
 //add inside table
 $app->post('/bakeri/add', function ($request, $response, $args) {
 $form_data = $request->getParsedBody();

@@ -9,13 +9,24 @@ function getAllbakeri($db)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-//get bakeri by id
+//get bakeri by name
 function getbakeri($db, $foodname)
 {
 $sql = 'Select * from bakeri Where food_name = :name';
 $stmt = $db->prepare ($sql);
 $name = $foodname;
 $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+$stmt->execute();
+return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+//get bakeri by category
+function getbakericategory($db, $foodcategory)
+{
+$sql = 'Select * from bakeri Where food_category = :category';
+$stmt = $db->prepare ($sql);
+$category = $foodcategory;
+$stmt->bindParam(':category', $category, PDO::PARAM_STR);
 $stmt->execute();
 return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -53,7 +64,7 @@ function updatebakeri($db,$form_dat,$foodname) {
 
     $stmt = $db->prepare ($sql);
     $name = $foodname;
-    // $mod = $date;
+  
 
     $stmt->bindParam(':name', $name, PDO::PARAM_STR);
     $stmt->bindParam(':price', $form_dat['food_price']);
